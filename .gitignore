@@ -21,4 +21,7 @@ cabal.project.local
 cabal.project.local~
 .HTF/
 .ghc.environment.*
-app/Main.hs
+app/test.hs
+app/test.exe
+app/test.hi
+app/test.o
