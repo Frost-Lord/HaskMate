@@ -5,7 +5,7 @@ import Control.Concurrent.MVar (newEmptyMVar, putMVar, tryTakeMVar, MVar)
 import Data.Time.Clock (getCurrentTime, UTCTime)
 
 -- Path to your Haskell script
-scriptPath = "app/Main.hs"
+scriptPath = "app/test.hs"
 scriptPath :: FilePath
 
 -- Delay between checks (in microseconds)
