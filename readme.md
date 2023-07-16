@@ -17,7 +17,7 @@ Embrace the Haskell way with HaskMate!
 ## Key Features
 
 - **Automatic File Watch**: HaskMate tracks modifications to your Haskell source files in real-time. Once you save a change, it kicks into action.
-- **Instant Build and Rerun**: Upon detecting a file modification, HaskMate triggers a rebuild of your project, followed by an execution of the updated build.
+- **Instant Build and Re-run**: Upon detecting a file modification, HaskMate triggers a rebuild of your project, followed by an execution of the updated build.
 - **Smart Detection**: HaskMate employs an efficient change detection mechanism to ensure no unnecessary builds are run.
 - **Colored Console Outputs**: Keep track of what's happening through informative, color-coded console outputs.
 
