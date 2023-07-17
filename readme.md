@@ -51,8 +51,8 @@ Embrace the Haskell way with HaskMate!
       - Ignore : Which files to ignore when a change is made
    ```json
    {
-    "ignore": ["./logs.txt", "./src/loop.hs"],
-    "delay": 1000000
+    "delay": 1000000,
+    "ignore": ["./logs.txt", "./src/loop.hs"]
    }
    ```
 
