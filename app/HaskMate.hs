@@ -4,6 +4,7 @@ import System.Process (createProcess, proc, terminateProcess, waitForProcess, ca
 import Control.Concurrent.MVar (newEmptyMVar, putMVar, tryTakeMVar, MVar)
 import Data.Time.Clock (getCurrentTime, UTCTime)
 import System.Environment (getArgs)
+import Commands (displayHelpData, displayVersionData)
 
 -- Delay between checks (in microseconds)
 delay :: Int
@@ -31,37 +32,41 @@ getLastModified path = do
 -- Monitor the script for changes and rerun it
 monitorScript :: FilePath -> UTCTime -> MVar (Maybe ProcessHandle) -> IO ()
 monitorScript path lastModified handleMVar = do
-    currentModified <- getLastModified path
-    if currentModified > lastModified
-        then do
-            putStrLn $ yellow ++ projectName ++ white ++ " Detected file modification. Rebuilding and running..."
-            let exePath = take (length path - 3) path
-            callCommand $ "stack ghc -- " ++ path
-            oldHandle <- tryTakeMVar handleMVar
-            case oldHandle of
-                Just (Just handle) -> do
-                    terminateProcess handle
-                    _ <- waitForProcess handle
-                    return ()
-                _ -> return ()
-            (_, _, _, newHandle) <- createProcess (proc exePath [])
-            putMVar handleMVar (Just newHandle)
-            monitorScript path currentModified handleMVar
-        else do
-            threadDelay delay
-            monitorScript path lastModified handleMVar
+  currentModified <- getLastModified path
+  if currentModified > lastModified
+    then do
+      putStrLn $ yellow ++ projectName ++ white ++ " Detected file modification. Rebuilding and running..."
+      let exePath = take (length path - 3) path
+      callCommand $ "stack ghc -- " ++ path
+      oldHandle <- tryTakeMVar handleMVar
+      case oldHandle of
+        Just (Just handle) -> do
+          terminateProcess handle
+          _ <- waitForProcess handle
+          return ()
+        _ -> return ()
+      (_, _, _, newHandle) <- createProcess (proc exePath [])
+      putMVar handleMVar (Just newHandle)
+      monitorScript path currentModified handleMVar
+    else do
+      threadDelay delay
+      monitorScript path lastModified handleMVar
 
 main :: IO ()
 main = do
-    args <- getArgs
-    case args of
-        (scriptPath:_) -> do
-            currentDir <- getCurrentDirectory
-            let fullPath = currentDir ++ "/" ++ scriptPath
-            putStrLn $ green ++ projectName ++ white ++" Starting HaskMate v1.0.0..."
-            putStrLn $ green ++ projectName ++ white ++" Running script in directory: " ++ fullPath
-            putStrLn $ green ++ projectName ++ white ++" Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
-            lastModified <- getLastModified fullPath
-            handleMVar <- newEmptyMVar
-            monitorScript fullPath lastModified handleMVar
-        [] -> putStrLn "Please provide a file to monitor as an argument." >> putStrLn "Example: HaskMate app/Main.hs"
+  args <- getArgs
+  case args of
+    ["--help"] -> displayHelpData
+    ["--h"] -> displayHelpData
+    ["--version"] -> displayVersionData
+    ["--v"] -> displayVersionData
+    (scriptPath:_) -> do
+      currentDir <- getCurrentDirectory
+      let fullPath = currentDir ++ "/" ++ scriptPath
+      putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.0.0..."
+      putStrLn $ green ++ projectName ++ white ++ " Running script in directory: " ++ fullPath
+      putStrLn $ green ++ projectName ++ white ++ " Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
+      lastModified <- getLastModified fullPath
+      handleMVar <- newEmptyMVar
+      monitorScript fullPath lastModified handleMVar
+    [] -> putStrLn "Please provide a file to monitor as an argument." >> putStrLn "Example: HaskMate app/Main.hs"
