@@ -18,7 +18,7 @@ Embrace the Haskell way with HaskMate!
 2. **Clone the Haskmate Repository:**
    - Download the latest version 
    - Click the Green code button
-   - CLick Download ZIP
+   - Click Download ZIP
 
 3. **Install Haskmate Dependencies:**
    - Run the following command to install the required dependencies using Cabal:
