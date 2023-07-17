@@ -1,0 +1,4 @@
+{
+  "ignore": ["./logs.txt", "./src/loop.hs"],
+  "delay": 1000000
+}

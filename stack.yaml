@@ -10,6 +10,7 @@ dependencies:
 - process
 - directory
 - time
+- aeson
 
 flags: {}
 

@@ -45,12 +45,24 @@ Embrace the Haskell way with HaskMate!
      ```
    - If the installation was successful, it will display the version number of Haskmate.
 
+## Custom Settings (Optional)
+   - There are 2 options
+      - Delay : The delay it will take till it re-starts the program after a change is made
+      - Ignore : Which files to ignore when a change is made
+   ```json
+   {
+    "ignore": ["./logs.txt", "./src/loop.hs"],
+    "delay": 1000000
+   }
+   ```
+
 ## Key Features
 
 - **Automatic File Watch**: HaskMate tracks modifications to your Haskell source files in real-time. Once you save a change, it kicks into action.
 - **Instant Build and Re-run**: Upon detecting a file modification, HaskMate triggers a rebuild of your project, followed by an execution of the updated build.
 - **Smart Detection**: HaskMate employs an efficient change detection mechanism to ensure no unnecessary builds are run.
 - **Colored Console Outputs**: Keep track of what's happening through informative, color-coded console outputs.
+- **Settings**: Control what files you want to be monitored in the dir and the delay till it re-starts
 
 ## Future Plans
 

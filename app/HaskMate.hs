@@ -5,10 +5,7 @@ import Control.Concurrent.MVar (newEmptyMVar, putMVar, tryTakeMVar, MVar)
 import Data.Time.Clock (getCurrentTime, UTCTime)
 import System.Environment (getArgs)
 import Commands (displayHelpData, displayVersionData)
-
--- Delay between checks (in microseconds)
-delay :: Int
-delay = 1000000  -- 1 second
+import Settings (Settings(..), loadSettings)
 
 -- ANSI escape sequences for color
 red, white, yellow, green :: String
@@ -30,8 +27,8 @@ getLastModified path = do
     else getCurrentTime
 
 -- Monitor the script for changes and rerun it
-monitorScript :: FilePath -> UTCTime -> MVar (Maybe ProcessHandle) -> IO ()
-monitorScript path lastModified handleMVar = do
+monitorScript :: Int -> FilePath -> UTCTime -> MVar (Maybe ProcessHandle) -> IO ()
+monitorScript delayTime path lastModified handleMVar = do
   currentModified <- getLastModified path
   if currentModified > lastModified
     then do
@@ -47,10 +44,10 @@ monitorScript path lastModified handleMVar = do
         _ -> return ()
       (_, _, _, newHandle) <- createProcess (proc exePath [])
       putMVar handleMVar (Just newHandle)
-      monitorScript path currentModified handleMVar
+      monitorScript delayTime path currentModified handleMVar
     else do
-      threadDelay delay
-      monitorScript path lastModified handleMVar
+      threadDelay delayTime
+      monitorScript delayTime path lastModified handleMVar
 
 main :: IO ()
 main = do
@@ -62,11 +59,23 @@ main = do
     ["--v"] -> displayVersionData
     (scriptPath:_) -> do
       currentDir <- getCurrentDirectory
+      let jsonPath = currentDir ++ "/haskmate.json"
+      jsonExists <- doesFileExist jsonPath
+      settings <- if jsonExists
+                    then do
+                      putStrLn $ green ++ projectName ++ white ++ " Loaded settings from HaskMate.json"
+                      loadSettings jsonPath
+                    else do 
+                    putStrLn (yellow ++ projectName ++ white ++ " No HaskMate.json file found. Using default settings.")
+                    return Nothing
+
+      let delayTime = maybe 1000000 id (delay =<< settings) -- use default if not found in settings
+
       let fullPath = currentDir ++ "/" ++ scriptPath
       putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.0.0..."
       putStrLn $ green ++ projectName ++ white ++ " Running script in directory: " ++ fullPath
       putStrLn $ green ++ projectName ++ white ++ " Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
       lastModified <- getLastModified fullPath
       handleMVar <- newEmptyMVar
-      monitorScript fullPath lastModified handleMVar
+      monitorScript delayTime fullPath lastModified handleMVar
     [] -> putStrLn "Please provide a file to monitor as an argument." >> putStrLn "Example: HaskMate app/Main.hs"
