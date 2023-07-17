@@ -2,13 +2,15 @@ cabal-version:      3.0
 name:               HaskMate
 version:            0.1.0.0
 -- synopsis:
+synopsis:            Haskell File Monitor
+homepage:            https://github.com/Frost-Lord/HaskMate
 -- description:
 license:            MIT
 license-file:       LICENSE
 author:             Frost Lord
 maintainer:         51778028+Frost-Lord@users.noreply.github.com
 -- copyright:
-category:           Math
+category:           System
 build-type:         Simple
 extra-doc-files:    CHANGELOG.md
 -- extra-source-files:

@@ -3,10 +3,7 @@ import System.Directory (doesFileExist, getModificationTime, getCurrentDirectory
 import System.Process (createProcess, proc, terminateProcess, waitForProcess, callCommand, ProcessHandle)
 import Control.Concurrent.MVar (newEmptyMVar, putMVar, tryTakeMVar, MVar)
 import Data.Time.Clock (getCurrentTime, UTCTime)
-
--- Path to your Haskell script
-scriptPath = "app/test.hs"
-scriptPath :: FilePath
+import System.Environment (getArgs)
 
 -- Delay between checks (in microseconds)
 delay :: Int
@@ -56,11 +53,15 @@ monitorScript path lastModified handleMVar = do
 
 main :: IO ()
 main = do
-    currentDir <- getCurrentDirectory
-    let fullPath = currentDir ++ "/" ++ scriptPath
-    putStrLn $ green ++ projectName ++ white ++" Starting Haskellmon v0.1.0.0..."
-    putStrLn $ green ++ projectName ++ white ++" Running script in directory: " ++ fullPath
-    putStrLn $ green ++ projectName ++ white ++" Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
-    lastModified <- getLastModified fullPath
-    handleMVar <- newEmptyMVar
-    monitorScript fullPath lastModified handleMVar
+    args <- getArgs
+    case args of
+        (scriptPath:_) -> do
+            currentDir <- getCurrentDirectory
+            let fullPath = currentDir ++ "/" ++ scriptPath
+            putStrLn $ green ++ projectName ++ white ++" Starting HaskMate v1.0.0..."
+            putStrLn $ green ++ projectName ++ white ++" Running script in directory: " ++ fullPath
+            putStrLn $ green ++ projectName ++ white ++" Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
+            lastModified <- getLastModified fullPath
+            handleMVar <- newEmptyMVar
+            monitorScript fullPath lastModified handleMVar
+        [] -> putStrLn "Please provide a file to monitor as an argument." >> putStrLn "Example: HaskMate app/Main.hs"
