@@ -1,0 +1,20 @@
+resolver: lts-18.20
+
+packages:
+- .
+
+extra-deps: []
+
+dependencies:
+- base
+- process
+- directory
+- time
+
+flags: {}
+
+extra-package-dbs: []
+
+system-ghc: true
+
+arch: x86_64
