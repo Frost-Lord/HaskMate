@@ -12,7 +12,38 @@ Embrace the Haskell way with HaskMate!
 
 ## Installation and Usage
 
-(COMIGN SOON)
+1. **Prerequisites:**
+   - Ensure that you have Haskell and Cabal installed on your system. You can download them from the official Haskell website: [https://www.haskell.org/downloads](https://www.haskell.org/downloads).
+
+2. **Clone the Haskmate Repository:**
+   - Download the latest version 
+   - Click the Green code button
+   - CLick Download ZIP
+
+3. **Install Haskmate Dependencies:**
+   - Run the following command to install the required dependencies using Cabal:
+     ```
+     cabal install --only-dependencies
+     ```
+
+4. **Build Haskmate:**
+   - Once the dependencies are installed, build Haskmate by running the following command:
+     ```
+     cabal build
+     ```
+
+5. **Install Haskmate:**
+   - To install Haskmate on your system, execute the install.ps1 in powershell:
+     ```
+     install.ps1
+     ```
+
+6. **Verify the Installation:**
+   - After a successful installation, you can check if Haskmate is working by running the following command:
+     ```
+     haskmate --version
+     ```
+   - If the installation was successful, it will display the version number of Haskmate.
 
 ## Key Features
 
