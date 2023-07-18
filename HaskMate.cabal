@@ -20,6 +20,6 @@ executable HaskMate
     import:           warnings
     main-is:          HaskMate.hs
     other-modules:    Commands, Settings
-    build-depends:    base, process, directory, time, aeson, bytestring
+    build-depends:    base, process, directory, time, aeson, bytestring, text, http-client, http-conduit, http-types
     hs-source-dirs:   app
     default-language: Haskell2010

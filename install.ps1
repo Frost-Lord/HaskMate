@@ -1,6 +1,6 @@
 $destinationDir = "$env:APPDATA\Haskmate"
 $sourceExe1 = ".\Haskmate.exe"
-$sourceExe2 = ".\dist-newstyle\build\x86_64-windows\ghc-9.6.2\HaskMate-0.1.0.0\x\HaskMate\build\HaskMate\Haskmate.exe"
+$sourceExe2 = ".\.stack-work\dist\274b403a\build\HaskMate\Haskmate.exe"
 
 # Check if Haskmate directory is already in the PATH environment variable
 $existingPath = [Environment]::GetEnvironmentVariable("PATH", "User")

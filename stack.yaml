@@ -5,13 +5,6 @@ packages:
 
 extra-deps: []
 
-dependencies:
-- base
-- process
-- directory
-- time
-- aeson
-
 flags: {}
 
 extra-package-dbs: []
