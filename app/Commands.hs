@@ -54,7 +54,7 @@ displayVersionData = do
   let maybeRelease = eitherDecode responseBody :: Either String Release
   case maybeRelease of
     Right release -> do
-      let currentVersion = "v1.0.0" -- Current version
+      let currentVersion = "v1.1.0" -- Current version
       if T.unpack (tag_name release) == currentVersion
         then putStrLn $ green ++ "You are using the latest version of HaskMate! " ++ currentVersion ++ white
         else putStrLn $ red ++ "A new version of HaskMate is available: " ++ T.unpack (tag_name release) ++ white
