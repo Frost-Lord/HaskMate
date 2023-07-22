@@ -25,3 +25,5 @@ test/test.exe
 test/test.hi
 test/test.o
 code.txt
+test/stack.yaml.lock
+test/app/test.exe

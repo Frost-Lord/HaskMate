@@ -1,5 +1,5 @@
 {
   "delay": 1000000,
   "ignore": ["./logs.txt", "./src/loop.hs"],
-  "script": "ghc"
+  "script": "stack"
 }

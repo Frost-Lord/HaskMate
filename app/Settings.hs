@@ -12,12 +12,14 @@ import System.Directory (doesFileExist)
 data Settings = Settings
   { ignore :: [String]
   , delay :: Maybe Int
+  , script :: String
   } deriving (Show)
 
 instance FromJSON Settings where
   parseJSON = withObject "Settings" $ \v ->
     Settings <$> v .: (fromString "ignore")
              <*> v .:? (fromString "delay")
+             <*> v .: (fromString "script")
 
 -- Load the settings from a JSON file
 loadSettings :: FilePath -> IO (Maybe Settings)
