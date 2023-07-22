@@ -54,6 +54,7 @@ Embrace the Haskell way with HaskMate!
    {
     "delay": 1000000,
     "ignore": ["./logs.txt", "./src/loop.hs"]
+    "script": "stack"
    }
    ```
 
