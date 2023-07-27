@@ -2,7 +2,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module Commands (displayHelpData, displayVersionData) where
-
 import Network.HTTP.Simple
 import Network.HTTP.Types.Header (hUserAgent)
 import Data.ByteString.Lazy.Char8 ()
