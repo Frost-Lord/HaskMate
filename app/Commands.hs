@@ -44,7 +44,6 @@ displayVersionData = do
   let request = setRequestHeader hUserAgent ["HaskMate"] initialRequest
 
   response <- httpLBS request
-
   let responseBody = getResponseBody response
 
   -- putStrLn $ "Response Body: " ++ LBS.unpack responseBody --dev testing (ignore)
