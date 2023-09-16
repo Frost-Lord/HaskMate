@@ -36,7 +36,7 @@ Embrace the Haskell way with HaskMate!
 5. **Install Haskmate:**
    - To install Haskmate on your system, execute the install.ps1 in powershell:
      ```
-     install.ps1
+     Set-ExecutionPolicy RemoteSigned -Scope CurrentUser && install.ps1
      ```
 
 6. **Verify the Installation:**
