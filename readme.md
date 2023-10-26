@@ -11,6 +11,36 @@ Whether you're prototyping a new function, or debugging a complex piece of logic
 
 Embrace the Haskell way with HaskMate!
 
+## Custom Settings (Optional)
+
+- **Delay**: The time, in microseconds, until the program restarts after a change is made.
+- **Ignore**: Specify files to be ignored when changes are detected.
+- **Script**: Choose the script to run: `stack`, `ghc`, or `cabal`.
+- **Custom Command**: If you prefer a custom command to our preset scripts, enter it here.
+
+```json
+{
+  "delay": 1000000,
+  "ignore": ["./logs.txt", "./src/loop.hs"],
+  "script": "stack",
+  "cmd": "echo hi && stack build" // Optional field for a custom event command
+}
+   ```
+
+## Key Features
+
+- **Automatic File Watch**: HaskMate tracks modifications to your Haskell source files in real-time. Once you save a change, it kicks into action.
+- **Instant Build and Re-run**: Upon detecting a file modification, HaskMate triggers a rebuild of your project, followed by an execution of the updated build.
+- **Smart Detection**: HaskMate employs an efficient change detection mechanism to ensure no unnecessary builds are run.
+- **Colored Console Outputs**: Keep track of what's happening through informative, color-coded console outputs.
+- **Settings**: Control what files you want to be monitored in the dir and the delay till it re-starts
+
+## Future Plans
+
+- Ability to customize the file watch pattern to include or exclude specific files or directories.
+- Integration with popular Haskell test frameworks for automated testing.
+
+
 ## Installation and Usage
 
 1. **Prerequisites:**
@@ -45,35 +75,6 @@ Embrace the Haskell way with HaskMate!
      haskmate --version
      ```
    - If the installation was successful, it will display the version number of Haskmate.
-
-## Custom Settings (Optional)
-
-- **Delay**: The time, in microseconds, until the program restarts after a change is made.
-- **Ignore**: Specify files to be ignored when changes are detected.
-- **Script**: Choose the script to run: `stack`, `ghc`, or `cabal`.
-- **Custom Command**: If you prefer a custom command to our preset scripts, enter it here.
-
-```json
-{
-  "delay": 1000000,
-  "ignore": ["./logs.txt", "./src/loop.hs"],
-  "script": "stack",
-  "cmd": "echo hi && stack build" // Optional field for a custom event command
-}
-   ```
-
-## Key Features
-
-- **Automatic File Watch**: HaskMate tracks modifications to your Haskell source files in real-time. Once you save a change, it kicks into action.
-- **Instant Build and Re-run**: Upon detecting a file modification, HaskMate triggers a rebuild of your project, followed by an execution of the updated build.
-- **Smart Detection**: HaskMate employs an efficient change detection mechanism to ensure no unnecessary builds are run.
-- **Colored Console Outputs**: Keep track of what's happening through informative, color-coded console outputs.
-- **Settings**: Control what files you want to be monitored in the dir and the delay till it re-starts
-
-## Future Plans
-
-- Ability to customize the file watch pattern to include or exclude specific files or directories.
-- Integration with popular Haskell test frameworks for automated testing.
 
 ## Contributing
 
