@@ -30,7 +30,7 @@ Embrace the Haskell way with HaskMate!
 4. **Build Haskmate:**
    - Once the dependencies are installed, build Haskmate by running the following command:
      ```
-     cabal build
+     stack build
      ```
 
 5. **Install Haskmate:**
@@ -47,15 +47,19 @@ Embrace the Haskell way with HaskMate!
    - If the installation was successful, it will display the version number of Haskmate.
 
 ## Custom Settings (Optional)
-   - There are 2 options
-      - Delay : The delay it will take till it re-starts the program after a change is made
-      - Ignore : Which files to ignore when a change is made
-   ```json
-   {
-    "delay": 1000000,
-    "ignore": ["./logs.txt", "./src/loop.hs"]
-    "script": "stack"
-   }
+
+- **Delay**: The time, in microseconds, until the program restarts after a change is made.
+- **Ignore**: Specify files to be ignored when changes are detected.
+- **Script**: Choose the script to run: `stack`, `ghc`, or `cabal`.
+- **Custom Command**: If you prefer a custom command to our preset scripts, enter it here.
+
+```json
+{
+  "delay": 1000000,
+  "ignore": ["./logs.txt", "./src/loop.hs"],
+  "script": "stack",
+  "cmd": "echo hi && stack build" // Optional field for a custom event command
+}
    ```
 
 ## Key Features
