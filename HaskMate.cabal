@@ -1,14 +1,12 @@
 cabal-version:      3.0
 name:               HaskMate
 version:            0.1.0.0
-synopsis:            Haskell File Monitor
-homepage:            https://github.com/Frost-Lord/HaskMate
-
+synopsis:           Haskell File Monitor
+homepage:           https://github.com/Frost-Lord/HaskMate
 license:            MIT
 license-file:       LICENSE
 author:             Frost Lord
 maintainer:         51778028+Frost-Lord@users.noreply.github.com
-
 category:           System
 build-type:         Simple
 extra-doc-files:    CHANGELOG.md
@@ -23,3 +21,10 @@ executable HaskMate
     build-depends:    base, process, directory, time, aeson, bytestring, text, http-client, http-conduit, http-types, filepath
     hs-source-dirs:   app
     default-language: Haskell2010
+
+    ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+
+    if os(windows)
+        cpp-options: -DWINDOWS
+
+    extra-source-files: ./logo.ico

@@ -27,19 +27,25 @@ getLastModified path = do
     then getModificationTime path
     else getCurrentTime
 
--- Decide which command to run based on the script
-runScript :: String -> FilePath -> IO ()
-runScript script' path = do
+-- Decide which command to run based on the settings
+runScriptOrCmd :: Maybe Settings -> FilePath -> IO ()
+runScriptOrCmd settings path = do
   let rootPath = takeDirectory path
-  case script' of
-    "ghc" -> callCommand $ "stack ghc -- " ++ path
-    "stack" -> callCommand $ "stack build && stack run " ++ rootPath
-    "cabal" -> callCommand $ "cabal build && cabal run " ++ rootPath
-    _ -> callCommand $ "stack ghc -- " ++ path  -- default
+  case settings of
+    Just s  -> do
+      if not (null (cmd s))
+        then do
+          callCommand (cmd s)
+        else case script s of
+                "ghc" -> callCommand $ "stack ghc -- " ++ path
+                "stack" -> callCommand $ "stack build && stack run " ++ rootPath
+                "cabal" -> callCommand $ "cabal build && cabal run " ++ rootPath
+                customScript -> callCommand customScript
+    Nothing -> callCommand $ "stack ghc -- " ++ path
 
 -- Monitor file changes
-monitorScript :: Int -> FilePath -> UTCTime -> MVar (Maybe ProcessHandle) -> String -> IO ()
-monitorScript delayTime path lastModified handleMVar script' = do
+monitorScript :: Int -> FilePath -> UTCTime -> MVar (Maybe ProcessHandle) -> Maybe Settings -> IO ()
+monitorScript delayTime path lastModified handleMVar settings = do
   let loop currentLastModified = do
         threadDelay delayTime
         currentModified <- getLastModified path
@@ -53,7 +59,7 @@ monitorScript delayTime path lastModified handleMVar script' = do
                 _ <- waitForProcess handle
                 return ()
               _ -> return ()
-            runScript script' path
+            runScriptOrCmd settings path
             loop currentModified
           else loop currentLastModified
   loop lastModified
@@ -78,15 +84,14 @@ main = do
                       putStrLn (yellow ++ projectName ++ white ++ " No HaskMate.json file found. Using default settings.")
                       return Nothing
       let delayTime = maybe 1000000 id (delay =<< settings)
-      let scriptType = case settings of
-                         Just s  -> script s
-                         Nothing -> "ghc"
 
       let fullPath = currentDir ++ "/" ++ scriptPath
-      putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.0.0..."
+      putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.2.0..."
       putStrLn $ green ++ projectName ++ white ++ " Running script in directory: " ++ fullPath
       putStrLn $ green ++ projectName ++ white ++ " Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
+      
+      runScriptOrCmd settings fullPath
       lastModified <- getLastModified fullPath
       handleMVar <- newEmptyMVar
-      monitorScript delayTime fullPath lastModified handleMVar scriptType
+      monitorScript delayTime fullPath lastModified handleMVar settings
     [] -> putStrLn "Please provide a file to monitor as an argument." >> putStrLn "Example: HaskMate app/Main.hs"
