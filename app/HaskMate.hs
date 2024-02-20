@@ -5,7 +5,7 @@ import Control.Concurrent.MVar (newEmptyMVar, tryTakeMVar, MVar)
 import Data.Time.Clock (getCurrentTime, UTCTime)
 import System.FilePath (takeDirectory)
 import System.Environment (getArgs)
-import Commands (displayHelpData, displayVersionData)
+import Commands (displayHelpData, displayVersionData, displayCommands, displayConfigData, displayLogData, displayClearData, displayCreditsData)
 import Settings (Settings(..), loadSettings)
 
 -- ANSI escape sequences for color
@@ -64,6 +64,8 @@ monitorScript delayTime path lastModified handleMVar settings = do
           else loop currentLastModified
   loop lastModified
 
+-- displayCommands, displayConfigData, displayLogData, displayClearData, displayCreditsData
+
 main :: IO ()
 main = do
   args <- getArgs
@@ -72,6 +74,11 @@ main = do
     ["--h"] -> displayHelpData
     ["--version"] -> displayVersionData
     ["--v"] -> displayVersionData
+    ["--commands"] -> displayCommands
+    ["--config"] -> displayConfigData
+    ["--log"] -> displayLogData
+    ["--clear"] -> displayClearData
+    ["--credits"] -> displayCreditsData
     (scriptPath:_) -> do
       currentDir <- getCurrentDirectory
       let jsonPath = currentDir ++ "/haskmate.json"

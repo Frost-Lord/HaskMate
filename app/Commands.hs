@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Commands (displayHelpData, displayVersionData) where
+module Commands (displayHelpData, displayVersionData, displayCommands, displayConfigData, displayLogData, displayClearData, displayCreditsData) where
 import Network.HTTP.Simple
 import Network.HTTP.Types.Header (hUserAgent)
 import Data.ByteString.Lazy.Char8 ()
@@ -56,3 +56,48 @@ displayVersionData = do
         then putStrLn $ green ++ "You are using the latest version of HaskMate! " ++ currentVersion ++ white
         else putStrLn $ red ++ "A new version of HaskMate is available: " ++ T.unpack (tag_name release) ++ white
     Left err -> putStrLn $ red ++ "Failed to parse response body as Release: " ++ err ++ white
+
+
+-- |_______________________________________________________________________________________|
+-- |                     Display commands to the user                                      |
+-- |_______________________________________________________________________________________|
+
+displayCommands :: IO ()
+displayCommands = do
+  putStrLn $ yellow ++ "Commands:"
+  putStrLn $ white ++ "  --help      Display help information"
+  putStrLn $ white ++ "  --version   Display version information/Check for updates"
+  putStrLn $ white ++ "  --config    Configure HaskMate"
+  putStrLn $ white ++ "  --log       Display HaskMate log"
+  putStrLn $ white ++ "  --clear     Clear HaskMate log"
+  putStrLn $ white ++ "  --credits   Display credits"
+
+-- |_______________________________________________________________________________________|
+
+displayConfigData :: IO ()
+displayConfigData = do
+  putStrLn $ yellow ++ "Configuration:"
+  putStrLn $ white ++ "  --SaveLog=true/false      Save the log to a file"
+
+-- |_______________________________________________________________________________________|
+
+displayLogData :: IO ()
+displayLogData = do
+  putStrLn $ yellow ++ "Log:"
+  putStrLn $ white ++ "  --logPath=path/to/log      Path to the log file"
+
+-- |_______________________________________________________________________________________|
+
+displayClearData :: IO ()
+displayClearData = do
+  putStrLn $ yellow ++ "Clear:"
+  putStrLn $ white ++ "  --clearLog=true/false      Clear the log file"
+
+-- |_______________________________________________________________________________________|
+
+displayCreditsData :: IO ()
+displayCreditsData = do
+  putStrLn $ yellow ++ "Credits:"
+  putStrLn $ green ++ "Developed by: Frost Lord | Ewen MacCulloch"
+  putStrLn $ green ++ "GitHub: Frost-Lord"
+  putStrLn $ white
