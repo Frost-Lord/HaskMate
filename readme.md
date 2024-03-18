@@ -76,7 +76,7 @@ Embrace the Haskell way with HaskMate!
      ```
    - If the installation was successful, it will display the version number of Haskmate.
 
-## Contributing
+## Contributing:
 
 We warmly welcome and appreciate contributions from the community. To contribute:
 
