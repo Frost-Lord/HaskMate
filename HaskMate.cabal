@@ -1,6 +1,6 @@
 cabal-version:      3.0
 name:               HaskMate
-version:            0.1.0.0
+version:            0.1.3.0
 synopsis:           Haskell File Monitor
 homepage:           https://github.com/Frost-Lord/HaskMate
 license:            MIT
@@ -17,7 +17,7 @@ common warnings
 executable HaskMate
     import:           warnings
     main-is:          HaskMate.hs
-    other-modules:    Commands, Settings
+    other-modules:    Commands, Settings, Generate
     build-depends:    base, process, directory, time, aeson, bytestring, text, http-client, http-conduit, http-types, filepath
     hs-source-dirs:   app
     default-language: Haskell2010

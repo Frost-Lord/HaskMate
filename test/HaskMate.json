@@ -1,6 +1,6 @@
 {
-  "delay": 1000000,
-  "ignore": ["./logs.txt", "./src/loop.hs"],
-  "script": "stack",
-  "cmd": ""
+    "delay": 1000000,
+    "ignore": [],
+    "script": "stack",
+    "cmd": ""
 }

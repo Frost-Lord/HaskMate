@@ -7,6 +7,7 @@ import System.FilePath (takeDirectory)
 import System.Environment (getArgs)
 import Commands (displayHelpData, displayVersionData, displayCommands, displayConfigData, displayLogData, displayClearData, displayCreditsData)
 import Settings (Settings(..), loadSettings)
+import Generate (generateConfig)
 
 -- ANSI escape sequences for color
 red, white, yellow, green :: String
@@ -64,14 +65,14 @@ monitorScript delayTime path lastModified handleMVar settings = do
           else loop currentLastModified
   loop lastModified
 
--- displayCommands, displayConfigData, displayLogData, displayClearData, displayCreditsData
-
 main :: IO ()
 main = do
   args <- getArgs
   case args of
     ["--help"] -> displayHelpData
     ["--h"] -> displayHelpData
+    ["--generate"] -> generateConfig
+    ["--gen"] -> generateConfig
     ["--version"] -> displayVersionData
     ["--v"] -> displayVersionData
     ["--commands"] -> displayCommands
@@ -93,7 +94,7 @@ main = do
       let delayTime = maybe 1000000 id (delay =<< settings)
 
       let fullPath = currentDir ++ "/" ++ scriptPath
-      putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.2.0..."
+      putStrLn $ green ++ projectName ++ white ++ " Starting HaskMate v1.3.0..."
       putStrLn $ green ++ projectName ++ white ++ " Running script in directory: " ++ fullPath
       putStrLn $ green ++ projectName ++ white ++ " Watching for file modifications. Press " ++ red ++ "Ctrl+C" ++ white ++ " to exit."
       
