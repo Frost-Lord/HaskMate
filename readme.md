@@ -25,7 +25,7 @@ Embrace the Haskell way with HaskMate!
   "script": "stack",
   "cmd": "echo hi && stack build" // Optional field for a custom event command
 }
-   ```
+```
 
 ## Key Features
 
